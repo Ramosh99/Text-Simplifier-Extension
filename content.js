@@ -109,7 +109,7 @@ function updatePopupContent(content) {
 }
 
 // Show API key input popup
-function showApiKeyPrompt(invalid = false) {
+function showApiKeyPrompt() {
   console.log("Displaying API key prompt...");
 
   // Remove any existing API key popup
@@ -118,15 +118,14 @@ function showApiKeyPrompt(invalid = false) {
 
   // Create API key input popup
   const apiPopup = document.createElement('div');
-  apiPopup.className = 'popup-container';
+  apiPopup.className = 'popup-key-container';
   apiPopup.id = 'api-key-popup';
 
   apiPopup.innerHTML = `
-    <div style="background: white; padding: 10px; border: 1px solid black; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+    <div >
       <p>Enter your Hugging Face API Key:</p>
       <input type='text' id='api-key-input' placeholder='hf_xxxxxxxxxxxxx' style='width: 100%; padding: 5px; margin: 5px 0; border: 1px solid #ccc;'>
-      ${invalid ? '<p style="color: red;">Invalid API key, please enter a valid one.</p>' : ''}
-      <button id='save-api-key' style='margin-top: 5px; padding: 5px 10px;'>Save</button>
+      <button id='save-api-key' >Save</button>
     </div>
   `;
 

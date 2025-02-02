@@ -10,9 +10,6 @@
     },
     "permissions": ["scripting", "storage", "activeTab"],
     "host_permissions": ["https://*.huggingface.co/*"],
-    "background": {
-      "service_worker": "background.js"
-    },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],

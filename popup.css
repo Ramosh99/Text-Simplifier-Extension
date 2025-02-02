@@ -1,87 +1,45 @@
 .popup-container {
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  max-width: 300px;
-  word-wrap: break-word;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: #333;
-}
-
-
-.api-key-modal {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  max-width: 300px;
   z-index: 10000;
-  animation: fadeIn 0.3s ease-in-out;
 }
-.api-key-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-.api-key-header h3 {
-  margin: 0;
-  color: #2c3e50;
-  font-size: 18px;
-}
-.close-btn {
-  cursor: pointer;
-  font-size: 24px;
-  color: #666;
-  padding: 5px;
-}
-.api-key-content {
-  padding: 10px 0;
-}
-.api-key-input {
+
+
+#api-key-input {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   margin: 10px 0;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.3s;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
-.api-key-input:focus {
-  border-color: #3498db;
-  outline: none;
-}
-.save-button {
-  background: #3498db;
+
+#save-api-key {
+  background: #4CAF50;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  width: 100%;
-  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s;
 }
-.save-button:hover {
-  background: #2980b9;
+
+#save-api-key:hover {
+  background: #6f45a0;
 }
-.error-message {
-  color: #e74c3c;
-  margin: 5px 0;
-  font-size: 14px;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -48%); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
+
+.popup-key-container{
+  position: fixed;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  max-width: 300px;
+  z-index: 99999;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+
 }
