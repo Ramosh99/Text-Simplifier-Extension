@@ -43,12 +43,58 @@ document.addEventListener('mouseup', async (e) => {
     }
   }
 });
+class GeminiClient {
+  constructor(apiKey, model = 'gemini-1.5-pro') {
+    this.apiKey = apiKey;
+    this.model = model;
+    this.baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`;
+  }
 
-// Fetch simplified text from API
+  async generateContent(prompt) {
+    const url = `${this.baseUrl}:generateContent?key=${this.apiKey}`;
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `Simplify this text in a clear and concise way: ${prompt}`
+            }]
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData}`);
+      }
+
+      const data = await response.json();
+      return this._parseResponse(data);
+
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  _parseResponse(data) {
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+      throw new Error('Invalid response format');
+    }
+    return data.candidates[0].content.parts[0].text;
+  }
+}
+
+// Modified simplifiedText function to use GeminiClient
 async function simplifiedText(text) {
   return new Promise((resolve, reject) => {
-    getAPIKey(async (HF_API_KEY) => {
-      if (!HF_API_KEY) {
+    getAPIKey(async (API_KEY) => {
+      if (!API_KEY) {
         console.log("No API key found, prompting user...");
         showApiKeyPrompt();
         reject(new Error('API key required'));
@@ -56,31 +102,15 @@ async function simplifiedText(text) {
       }
 
       try {
-        const response = await fetch("https://api-inference.huggingface.co/models/facebook/bart-large-cnn", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${HF_API_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            inputs: `Simplify this text: ${text}`,
-            parameters: { max_length: 130, min_length: 30 }
-          })
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            console.log("Invalid API key detected, removing and prompting user...");
-            chrome.storage.local.remove('hf_api_key'); // Clear invalid key
-            showApiKeyPrompt(true);
-          }
-          reject(new Error(`API request failed: ${response.status}`));
-          return;
-        }
-
-        const result = await response.json();
-        resolve(result[0]?.summary_text || "No summary available");
+        const client = new GeminiClient(API_KEY);
+        const simplifiedContent = await client.generateContent(text);
+        resolve(simplifiedContent);
       } catch (err) {
+        if (err.message.includes('401') || err.message.includes('403')) {
+          console.log("Invalid API key detected, removing and prompting user...");
+          chrome.storage.local.remove('hf_api_key');
+          showApiKeyPrompt(true);
+        }
         reject(err);
       }
     });
