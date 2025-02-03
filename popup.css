@@ -1,21 +1,23 @@
 .popup-container {
   position: absolute;
-  background: white;
+  background: var(--bg-color, white);
+  color: var(--text-color, #333);
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color, #ccc);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   max-width: 300px;
   z-index: 10000;
 }
 
-
 #api-key-input {
   width: 100%;
   padding: 8px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color, #ccc);
   border-radius: 4px;
+  background: var(--input-bg, white);
+  color: var(--text-color, #333);
 }
 
 #save-api-key {
@@ -25,21 +27,51 @@
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #save-api-key:hover {
   background: #6f45a0;
 }
 
-.popup-key-container{
+.popup-key-container {
   position: fixed;
-  background: white;
+  background: var(--bg-color, white);
+  color: var(--text-color, #333);
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color, #ccc);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   max-width: 300px;
   z-index: 99999;
-  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --border-color: #333;
+    --input-bg: #2d2d2d;
+  }
+  
+  .popup-container,
+  .popup-key-container {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  }
+
+  #api-key-input {
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  #save-api-key {
+    background: #3d8b40;
+  }
+
+  #save-api-key:hover {
+    background: #5d3b87;
+  }
 }
